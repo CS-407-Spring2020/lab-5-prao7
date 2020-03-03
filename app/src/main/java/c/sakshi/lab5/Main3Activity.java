@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -30,6 +31,7 @@ public class Main3Activity extends AppCompatActivity {
         if (noteid != -1) {
             Note note = Main2Activity.notes.get(noteid);
             String noteContent = note.getContent();
+            Log.i("NoteContent",noteContent);
             noteEditText.setText(noteContent);
         }
 
@@ -52,9 +54,13 @@ public class Main3Activity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         String date = dateFormat.format(new Date());
 
+        Log.i("NoteId", content);
+
         if (noteid == -1) {
+            Log.i("Here", content);
             title = "NOTE_" + (Main2Activity.notes.size() + 1);
             dbHelper.saveNotes(username,title,content,date);
+
         } else {
             title = "NOTE_" + noteid + 1;
             dbHelper.updateNotes(title,date,content,username);

@@ -46,19 +46,19 @@ public class Main2Activity extends AppCompatActivity {
         notes = dbHelper.readNotes(username);
 
         ArrayList<String> displayNotes = new ArrayList<>();
-        for(Note note:notes) {
+        for(Note note : notes) {
             displayNotes.add(String.format("Title:%s\nDate:%s", note.getTitle(),note.getDate()));
         }
 
 
-        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,displayNotes);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, displayNotes);
         ListView listView = (ListView) findViewById(R.id.noteListView);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),Main2Activity.class);
+                Intent intent = new Intent(getApplicationContext(),Main3Activity.class);
                 intent.putExtra("noteid",position);
                 startActivity(intent);
             }

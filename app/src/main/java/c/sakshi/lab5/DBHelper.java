@@ -2,6 +2,7 @@ package c.sakshi.lab5;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -13,18 +14,22 @@ public class DBHelper {
     }
 
     public void createTable() {
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS notes"
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS notes "
                 + "(id INTEGER PRIMARY KEY, username TEXT, date TEXT, title TEXT, content TEXT, src TEXT)");
 
     }
 
     public ArrayList<Note> readNotes(String username) {
-     createTable();
+
+        createTable();
         Cursor c = sqLiteDatabase.rawQuery(String.format("SELECT * from notes where username like '%s'",username),null);
+
         int dateIndex = c.getColumnIndex("date");
         int titleIndex = c.getColumnIndex("title");
         int contentIndex = c.getColumnIndex("content");
+
         c.moveToFirst();
+
         ArrayList<Note> notesList = new ArrayList<>();
 
         while (!c.isAfterLast()) {
@@ -39,6 +44,7 @@ public class DBHelper {
         }
         c.close();
         sqLiteDatabase.close();
+
         return notesList;
     }
 
@@ -49,6 +55,7 @@ public class DBHelper {
 
     public void updateNotes(String username, String title, String content, String date) {
         createTable();
+        Log.i("Reached updateNotes",content);
         sqLiteDatabase.execSQL(String.format("UPDATE notes set content = '%s', date = '%s' where title = '%s' and username = '%s'",content,date,title,username));
     }
 }
